@@ -108,7 +108,8 @@
       border-radius: 999px; background: white; font-weight: 800; font-size: .85rem;
     }
     .streak b { color: #e2563d; }
-    .avatar { width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--acid); font-weight: 900; }
+    .avatar { width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--acid); font-weight: 900; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease; }
+    .avatar:hover { transform: translateY(-1px); box-shadow: 0 7px 18px rgba(91,53,213,.18); }
     .mobile-menu { display: none; border: 0; background: transparent; padding: 8px; }
 
     .page { padding: clamp(24px, 4vw, 54px); max-width: 1320px; margin: 0 auto; }
@@ -268,6 +269,64 @@
     .reference-card a { font-weight: 850; text-decoration: none; }
     .disclaimer { margin-top: 20px; padding: 16px 18px; border-radius: 14px; background: #fff6dc; color: #62542b; font-size: .84rem; }
 
+    body.onboarding-open { overflow: hidden; }
+    .onboarding[hidden] { display: none; }
+    .onboarding {
+      position: fixed; inset: 0; z-index: 100; padding: 24px;
+      display: grid; place-items: center; overflow-y: auto;
+      background: rgba(26, 21, 47, .72); backdrop-filter: blur(18px);
+    }
+    .onboarding-dialog {
+      width: min(100%, 980px); min-height: 590px; display: grid; grid-template-columns: .92fr 1.08fr;
+      border: 1px solid rgba(255,255,255,.18); border-radius: 30px; overflow: hidden;
+      background: white; box-shadow: 0 34px 90px rgba(12, 7, 35, .35);
+      animation: onboarding-in .42s cubic-bezier(.2,.8,.2,1) both;
+    }
+    @keyframes onboarding-in { from { opacity: 0; transform: translateY(20px) scale(.985); } }
+    .onboarding-story {
+      position: relative; overflow: hidden; padding: 42px; color: white; background: var(--purple);
+      display: flex; flex-direction: column;
+    }
+    .onboarding-story::before {
+      content: ""; position: absolute; width: 280px; height: 280px; right: -130px; top: -110px;
+      border: 44px solid rgba(255,255,255,.12); border-radius: 50%;
+    }
+    .onboarding-story::after {
+      content: "RH"; position: absolute; left: -18px; bottom: -30px; font-weight: 950;
+      font-size: 9rem; line-height: 1; letter-spacing: -.11em; color: rgba(255,255,255,.07);
+    }
+    .onboarding-brand { position: relative; z-index: 1; display: flex; align-items: center; gap: 11px; font-weight: 900; }
+    .onboarding-brand .brand-mark { background: white; color: var(--purple); box-shadow: none; }
+    .onboarding-story-copy { position: relative; z-index: 1; margin: auto 0; }
+    .onboarding-story .hero-kicker { margin-bottom: 18px; }
+    .onboarding-story h2 { margin: 0; max-width: 390px; font-size: clamp(2rem, 3.6vw, 3.4rem); line-height: 1; letter-spacing: -.06em; }
+    .onboarding-story > small { position: relative; z-index: 1; color: #d8d1f8; font-size: .76rem; }
+    .onboarding-points { position: relative; z-index: 1; display: grid; gap: 12px; margin: 34px 0 0; padding: 0; list-style: none; }
+    .onboarding-points li { display: grid; grid-template-columns: 32px 1fr; align-items: start; gap: 10px; color: #e9e5fb; font-size: .88rem; }
+    .onboarding-points b { color: var(--acid); font-size: .75rem; letter-spacing: .08em; }
+    .onboarding-form-panel { position: relative; padding: clamp(34px, 6vw, 64px); display: flex; flex-direction: column; justify-content: center; }
+    .onboarding-step { display: flex; align-items: center; gap: 10px; color: var(--purple); font-size: .76rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .onboarding-step::before { content: ""; width: 34px; height: 3px; border-radius: 3px; background: var(--purple); }
+    .onboarding-form-panel h1 { margin: 18px 0 10px; font-size: clamp(2rem, 4vw, 3.35rem); line-height: 1.02; letter-spacing: -.06em; }
+    .onboarding-intro { margin: 0 0 30px; color: var(--muted); max-width: 470px; }
+    .onboarding-close { position: absolute; top: 22px; right: 22px; width: 40px; height: 40px; border: 1px solid var(--line); border-radius: 12px; background: white; cursor: pointer; display: grid; place-items: center; }
+    .onboarding-close:hover { background: var(--paper); }
+    .name-field { display: grid; gap: 8px; }
+    .name-field label { font-size: .86rem; font-weight: 850; }
+    .name-input {
+      width: 100%; height: 58px; padding: 0 17px; border: 1px solid #c9c5d5; border-radius: 13px;
+      background: #fbfbfd; color: var(--ink); font-size: 1.05rem; transition: border-color .16s ease, box-shadow .16s ease;
+    }
+    .name-input::placeholder { color: #a29eaa; }
+    .name-input:focus { outline: none; border-color: var(--purple); box-shadow: 0 0 0 4px rgba(91,53,213,.12); background: white; }
+    .name-input[aria-invalid="true"] { border-color: var(--bad); box-shadow: 0 0 0 4px rgba(184,50,54,.10); }
+    .field-meta { min-height: 22px; display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: .76rem; }
+    .field-error { color: var(--bad); font-weight: 750; }
+    .onboarding-form .primary { width: 100%; min-height: 52px; margin-top: 18px; background: var(--purple); color: white; box-shadow: 0 12px 28px rgba(91,53,213,.24); }
+    .onboarding-form .primary:hover { background: var(--purple-dark); }
+    .privacy-note { display: flex; align-items: center; gap: 8px; margin: 18px 0 0; color: var(--muted); font-size: .76rem; }
+    .privacy-note .icon { width: 16px; height: 16px; }
+
     .toast { position: fixed; right: 24px; bottom: 24px; z-index: 60; max-width: 330px; padding: 14px 17px; border-radius: 13px; background: var(--ink); color: white; box-shadow: var(--shadow); opacity: 0; transform: translateY(12px); pointer-events: none; transition: .22s ease; }
     .toast.show { opacity: 1; transform: translateY(0); }
     .mobile-nav { display: none; }
@@ -309,6 +368,15 @@
       .mobile-nav button { border: 0; background: transparent; display: grid; justify-items: center; gap: 3px; padding: 6px 4px; color: var(--muted); font-size: .65rem; font-weight: 750; }
       .mobile-nav button.active { color: var(--purple); }
       .mobile-nav .icon { width: 19px; height: 19px; }
+      .onboarding { padding: 12px; place-items: start center; }
+      .onboarding-dialog { min-height: auto; grid-template-columns: 1fr; border-radius: 22px; }
+      .onboarding-story { min-height: 260px; padding: 28px; }
+      .onboarding-story h2 { font-size: 2.15rem; max-width: 480px; }
+      .onboarding-points { margin-top: 22px; grid-template-columns: 1fr 1fr; }
+      .onboarding-points li:last-child { display: none; }
+      .onboarding-story > small { display: none; }
+      .onboarding-form-panel { padding: 34px 26px 30px; }
+      .onboarding-form-panel h1 { font-size: 2.15rem; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
@@ -316,6 +384,40 @@
   </style>
 </head>
 <body>
+  <div class="onboarding" id="onboarding" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle" hidden>
+    <div class="onboarding-dialog">
+      <section class="onboarding-story" aria-label="Votre parcours de préparation">
+        <div class="onboarding-brand"><div class="brand-mark">RH</div><span>Prépa RHSE</span></div>
+        <div class="onboarding-story-copy">
+          <div class="hero-kicker"><span></span> VOTRE PRÉPARATION</div>
+          <h2>Un plan clair pour avancer jusqu’au certificat.</h2>
+          <ul class="onboarding-points">
+            <li><b>01</b><span>Des sessions courtes, faciles à intégrer au quotidien.</span></li>
+            <li><b>02</b><span>Une explication utile après chaque réponse.</span></li>
+            <li><b>03</b><span>Des révisions ciblées sur vos points faibles.</span></li>
+          </ul>
+        </div>
+        <small>Outil d’entraînement indépendant et non officiel.</small>
+      </section>
+      <section class="onboarding-form-panel">
+        <button class="onboarding-close" id="onboardingClose" type="button" aria-label="Fermer" hidden>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+        <div class="onboarding-step" id="onboardingStep">Première étape</div>
+        <h1 id="onboardingTitle">Faisons connaissance</h1>
+        <p class="onboarding-intro" id="onboardingIntro">Votre espace s’adaptera à votre progression dès la première question.</p>
+        <form class="onboarding-form" id="onboardingForm" novalidate>
+          <div class="name-field">
+            <label for="nameInput">Comment souhaitez-vous qu’on vous appelle&nbsp;?</label>
+            <input class="name-input" id="nameInput" name="name" type="text" autocomplete="given-name" maxlength="40" placeholder="Votre prénom" aria-describedby="nameHint nameError">
+            <div class="field-meta"><span id="nameHint">2 à 40 caractères</span><span class="field-error" id="nameError" role="alert"></span></div>
+          </div>
+          <button class="primary" id="onboardingSubmit" type="submit">Commencer ma préparation</button>
+        </form>
+        <p class="privacy-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Votre prénom et votre progression restent sur cet appareil.</p>
+      </section>
+    </div>
+  </div>
   <div class="app">
     <aside class="sidebar" aria-label="Navigation principale">
       <div class="brand">
@@ -350,7 +452,7 @@
         </div>
         <div class="top-actions">
           <div class="streak"><b>●</b> <span id="streakLabel">Série de 0 jour</span></div>
-          <button class="avatar" aria-label="Profil de préparation">RH</button>
+          <button class="avatar" id="avatarBtn" aria-label="Modifier votre prénom" title="Modifier votre prénom">RH</button>
         </div>
       </header>
 
@@ -369,7 +471,7 @@
               </div>
             </div>
             <div class="hero-side">
-              <h3>Votre préparation</h3>
+              <h3 id="prepHeading">Votre préparation</h3>
               <div class="ring-wrap"><div class="ring" id="progressRing"><div class="ring-value"><strong id="masteryPercent">0%</strong><small>maîtrise</small></div></div></div>
               <div class="mini-stats">
                 <div class="mini-stat"><b id="answeredMini">0</b><span>questions traitées</span></div>
@@ -411,12 +513,12 @@
         </section>
 
         <section id="review" class="view">
-          <div class="section-head"><div><p class="eyebrow">Révision active</p><h2>Mes erreurs</h2><p>Retrouvez les notions à consolider et relancez une session ciblée.</p></div><button class="primary" data-action="review-errors">Réviser maintenant</button></div>
+          <div class="section-head"><div><p class="eyebrow">Révision active</p><h2 id="reviewHeading">Mes erreurs</h2><p>Retrouvez les notions à consolider et relancez une session ciblée.</p></div><button class="primary" data-action="review-errors">Réviser maintenant</button></div>
           <div class="panel"><h3>Notions à revoir</h3><span class="panel-sub" id="reviewSubtitle">Aucune erreur enregistrée.</span><div class="mistake-list" id="mistakeList"></div></div>
         </section>
 
         <section id="stats" class="view">
-          <div class="section-head"><div><p class="eyebrow">Progression</p><h2>Vos acquis en un coup d’œil</h2><p>Les données restent sur cet appareil.</p></div></div>
+          <div class="section-head"><div><p class="eyebrow">Progression</p><h2 id="statsHeading">Vos acquis en un coup d’œil</h2><p>Les données restent sur cet appareil.</p></div></div>
           <div class="stats-grid"><div class="stat-card"><span>Questions traitées</span><strong id="statAnswered">0</strong></div><div class="stat-card"><span>Taux de réussite</span><strong id="statAccuracy">—</strong></div><div class="stat-card"><span>Meilleure série</span><strong id="statBest">0</strong></div></div>
           <div class="panel"><h3>Détail par domaine</h3><span class="panel-sub">Votre taux de réussite depuis le début</span><div class="bars" id="statsBars"></div></div>
         </section>
@@ -476,7 +578,7 @@
       { id: 24, topic: "management", level: "Compréhension", q: "À quoi sert une politique du personnel ?", a: ["À formaliser des principes cohérents avec la stratégie et la culture", "À remplacer chaque contrat individuel", "À traiter uniquement les salaires", "À éviter toute décision managériale"], correct: 0, why: "Elle donne un cadre aux décisions et pratiques RH en cohérence avec la stratégie, les valeurs et les obligations de l’organisation." }
     ];
 
-    const defaultState = { answered: 0, correct: 0, bestStreak: 0, currentStreak: 0, errors: [], bookmarks: [], byTopic: {}, sessions: 0, lastDay: null, dayStreak: 0 };
+    const defaultState = { name: "", answered: 0, correct: 0, bestStreak: 0, currentStreak: 0, errors: [], bookmarks: [], byTopic: {}, sessions: 0, lastDay: null, dayStreak: 0 };
     const state = loadState();
     let session = { items: [], index: 0, selected: null, checked: false, correct: 0, seconds: 1080, timerId: null, mode: "mixed" };
 
@@ -488,6 +590,51 @@
     function shuffle(items) { return [...items].sort(() => Math.random() - .5); }
     function topicData(key) { return state.byTopic[key] || { answered: 0, correct: 0 }; }
     function percent(correct, answered) { return answered ? Math.round(correct / answered * 100) : 0; }
+    function firstName() { return (state.name || "").trim().split(/\s+/)[0] || ""; }
+    function initials(name) {
+      const parts = (name || "").trim().split(/\s+/).filter(Boolean);
+      return (parts.length > 1 ? parts[0][0] + parts.at(-1)[0] : (parts[0] || "RH").slice(0, 2)).toUpperCase();
+    }
+    function viewTitles() {
+      const name = firstName();
+      return {
+        dashboard: name ? `Bonjour ${name}, prêt·e à progresser ?` : "Bonjour, prêt·e à progresser ?",
+        review: name ? `À revoir, ${name}` : "Transformez vos erreurs en acquis",
+        stats: name ? `Votre progression, ${name}` : "Suivez votre progression",
+        resources: "Vos références de préparation",
+        quiz: name ? `À vous de jouer, ${name}` : "Session d’entraînement",
+        result: name ? `Votre bilan, ${name}` : "Bilan de la session"
+      };
+    }
+    function applyPersonalization() {
+      const name = firstName();
+      document.getElementById("avatarBtn").textContent = initials(state.name);
+      document.getElementById("dashboardHeading").textContent = name ? `Consolidez vos réflexes RH, ${name}.` : "Consolidez vos réflexes RH.";
+      document.getElementById("prepHeading").textContent = name ? `La préparation de ${name}` : "Votre préparation";
+      document.getElementById("reviewHeading").textContent = name ? `Vos points à revoir, ${name}` : "Mes erreurs";
+      document.getElementById("statsHeading").textContent = name ? `Vos acquis, ${name}` : "Vos acquis en un coup d’œil";
+      const activeView = document.querySelector(".view.active")?.id || "dashboard";
+      document.getElementById("pageTitle").textContent = viewTitles()[activeView] || "Prépa RHSE";
+    }
+    function openOnboarding(editing = false) {
+      const onboarding = document.getElementById("onboarding");
+      document.getElementById("onboardingClose").hidden = !editing;
+      document.getElementById("onboardingStep").textContent = editing ? "Votre profil" : "Première étape";
+      document.getElementById("onboardingTitle").textContent = editing ? "Comment souhaitez-vous qu’on vous appelle ?" : "Faisons connaissance";
+      document.getElementById("onboardingIntro").textContent = editing ? "Le nouveau prénom sera utilisé dans tout votre espace de préparation." : "Votre espace s’adaptera à votre progression dès la première question.";
+      document.getElementById("onboardingSubmit").textContent = editing ? "Enregistrer le prénom" : "Commencer ma préparation";
+      document.getElementById("nameInput").value = state.name || "";
+      document.getElementById("nameInput").setAttribute("aria-invalid", "false");
+      document.getElementById("nameError").textContent = "";
+      onboarding.hidden = false;
+      document.body.classList.add("onboarding-open");
+      requestAnimationFrame(() => document.getElementById("nameInput").focus());
+    }
+    function closeOnboarding() {
+      document.getElementById("onboarding").hidden = true;
+      document.body.classList.remove("onboarding-open");
+      document.getElementById("avatarBtn").focus();
+    }
     function iconFor(key) {
       const icons = {
         management: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>',
@@ -526,6 +673,7 @@
       document.getElementById("statAccuracy").textContent = state.answered ? acc + "%" : "—";
       document.getElementById("statBest").textContent = state.bestStreak;
       renderMistakes();
+      applyPersonalization();
     }
 
     function renderMistakes() {
@@ -538,8 +686,7 @@
       clearInterval(session.timerId);
       document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.id === id));
       document.querySelectorAll("[data-view]").forEach(b => b.classList.toggle("active", b.dataset.view === id));
-      const titles = { dashboard: "Bonjour, prêt·e à progresser ?", review: "Transformez vos erreurs en acquis", stats: "Suivez votre progression", resources: "Vos références de préparation", quiz: "Session d’entraînement", result: "Bilan de la session" };
-      document.getElementById("pageTitle").textContent = titles[id] || "Prépa RHSE";
+      document.getElementById("pageTitle").textContent = viewTitles()[id] || "Prépa RHSE";
       if (id !== "quiz") renderDashboard();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -557,7 +704,7 @@
       if (!pool.length) { toast("Aucune erreur à réviser — beau travail !"); return; }
       session = { items: shuffle(pool).slice(0, count), index: 0, selected: null, checked: false, correct: 0, seconds: mode === "mixed" ? 1080 : count * 105, timerId: null, mode };
       document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.id === "quiz"));
-      document.getElementById("pageTitle").textContent = "Session d’entraînement";
+      document.getElementById("pageTitle").textContent = viewTitles().quiz;
       renderQuestion();
       session.timerId = setInterval(() => { session.seconds = Math.max(0, session.seconds - 1); renderTimer(); if (!session.seconds) finishQuiz(); }, 1000);
       renderTimer();
@@ -620,7 +767,8 @@
       clearInterval(session.timerId);
       const score = percent(session.correct, session.items.length);
       document.getElementById("resultScore").textContent = score + "%";
-      document.getElementById("resultTitle").textContent = score >= 80 ? "Solide performance" : score >= 60 ? "Vous êtes sur la bonne voie" : "Chaque erreur vous fait avancer";
+      const name = firstName();
+      document.getElementById("resultTitle").textContent = score >= 80 ? `Solide performance${name ? `, ${name}` : ""}` : score >= 60 ? `Vous êtes sur la bonne voie${name ? `, ${name}` : ""}` : `Chaque erreur vous fait avancer${name ? `, ${name}` : ""}`;
       document.getElementById("resultCopy").textContent = `${session.correct} bonne${session.correct === 1 ? "" : "s"} réponse${session.correct === 1 ? "" : "s"} sur ${session.items.length}. ${score >= 80 ? "Continuez à varier les domaines pour stabiliser vos acquis." : "Relisez les explications et relancez une session ciblée."}`;
       showView("result");
     }
@@ -633,6 +781,33 @@
 
     let toastTimer;
     function toast(message) { const el = document.getElementById("toast"); el.textContent = message; el.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("show"), 2600); }
+
+    document.getElementById("onboardingForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const input = document.getElementById("nameInput");
+      const error = document.getElementById("nameError");
+      const name = input.value.trim().replace(/\s+/g, " ");
+      if (name.length < 2) {
+        input.setAttribute("aria-invalid", "true");
+        error.textContent = "Indiquez au moins 2 caractères.";
+        input.focus();
+        return;
+      }
+      state.name = name.slice(0, 40);
+      saveState();
+      renderDashboard();
+      closeOnboarding();
+      toast(`Bienvenue, ${firstName()} !`);
+    });
+    document.getElementById("nameInput").addEventListener("input", e => {
+      e.currentTarget.setAttribute("aria-invalid", "false");
+      document.getElementById("nameError").textContent = "";
+    });
+    document.getElementById("avatarBtn").addEventListener("click", () => openOnboarding(true));
+    document.getElementById("onboardingClose").addEventListener("click", closeOnboarding);
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && !document.getElementById("onboarding").hidden && state.name) closeOnboarding();
+    });
 
     document.addEventListener("click", e => {
       const answer = e.target.closest("[data-answer]"); if (answer) return chooseAnswer(Number(answer.dataset.answer));
@@ -648,7 +823,7 @@
     document.getElementById("validateBtn").addEventListener("click", validateAnswer);
     document.getElementById("bookmarkBtn").addEventListener("click", toggleBookmark);
     document.addEventListener("keydown", e => {
-      if (!document.getElementById("quiz").classList.contains("active")) return;
+      if (!document.getElementById("onboarding").hidden || !document.getElementById("quiz").classList.contains("active")) return;
       const keys = ["a","b","c","d"]; if (keys.includes(e.key.toLowerCase())) chooseAnswer(keys.indexOf(e.key.toLowerCase()));
       if (e.key === "Enter" && !document.getElementById("validateBtn").disabled) validateAnswer();
     });
@@ -659,12 +834,13 @@
       if (!context?.registerTool) return;
       const tools = [
         { name: "start_practice_session", title: "Démarrer un entraînement", description: "Démarre une session de questions HRSE, générale ou centrée sur un domaine.", inputSchema: { type: "object", properties: { topic: { type: "string", enum: ["mixed", "management", "admin", "salary", "law", "errors"] } }, required: ["topic"], additionalProperties: false }, annotations: { readOnlyHint: false, untrustedContentHint: false }, execute: ({topic}) => { const valid = ["mixed","management","admin","salary","law","errors"]; if (!valid.includes(topic)) throw new Error("Domaine invalide"); topic === "mixed" ? startQuiz("mixed") : topic === "errors" ? startQuiz("errors") : startQuiz("topic", topic); return { started: true, topic, questionCount: session.items.length }; } },
-        { name: "read_training_progress", title: "Lire la progression", description: "Renvoie la progression d'entraînement enregistrée sur cet appareil.", inputSchema: { type: "object", properties: {}, additionalProperties: false }, annotations: { readOnlyHint: true, untrustedContentHint: false }, execute: () => ({ answered: state.answered, accuracyPercent: percent(state.correct, state.answered), errorsToReview: state.errors.length, bestStreak: state.bestStreak }) }
+        { name: "read_training_progress", title: "Lire la progression", description: "Renvoie la progression d'entraînement enregistrée sur cet appareil.", inputSchema: { type: "object", properties: {}, additionalProperties: false }, annotations: { readOnlyHint: true, untrustedContentHint: false }, execute: () => ({ name: state.name || null, answered: state.answered, accuracyPercent: percent(state.correct, state.answered), errorsToReview: state.errors.length, bestStreak: state.bestStreak }) }
       ];
       tools.forEach(tool => { try { Promise.resolve(context.registerTool(tool)).catch(() => {}); } catch {} });
     }
 
     renderDashboard(); registerWebMCP();
+    if (!state.name) openOnboarding(false);
   </script>
 </body>
 </html>
